@@ -5,7 +5,7 @@ npm-debug.log*
 
 # Dependencies
 node_modules/
-package_lock.json
+package-lock.json
 
 # Coverage
 coverage
