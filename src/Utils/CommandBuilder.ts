@@ -1,8 +1,9 @@
 import { WAConnection, WAChatUpdate } from '@adiwajshing/baileys'
+import { CommandOptions } from '../@Typings/CommandOptions'
 import State from '../State'
 
 export abstract class CommandBuilder {
-  public options: any
+  public options: CommandOptions
   constructor (options: any) {
     this.options = options
   }

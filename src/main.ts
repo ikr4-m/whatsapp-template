@@ -1,16 +1,19 @@
 import { WAConnection } from '@adiwajshing/baileys'
 import State from './State'
+import ResolvingCommand from './Utils/ResolvingCommand'
 import * as FS from 'fs'
 
 const client = new WAConnection()
 const state = new State()
 
+// Import all the command before client committing connect
+ResolvingCommand(state)
+
 async function connectToWhatsApp () {
   // Handling event pre-connect
   FS.readdirSync('./build/src/Events/PreConnect').forEach(async (evt) => {
     // Skip if .map
-    if (evt.split('.').pop() === 'map')
-      return
+    if (evt.split('.').pop() === 'map') return
 
     // Import function
     const evtFnc = await import(`./Events/PreConnect/${evt}`)
@@ -23,8 +26,7 @@ async function connectToWhatsApp () {
   // Handling event post-connect
   FS.readdirSync('./build/src/Events/PostConnect').forEach(async (evt) => {
     // Skip if .map
-    if (evt.split('.').pop() === 'map')
-      return
+    if (evt.split('.').pop() === 'map') return
 
     // Import function
     const evtFnc = await import(`./Events/PostConnect/${evt}`)
@@ -34,6 +36,6 @@ async function connectToWhatsApp () {
 
 connectToWhatsApp()
   .catch(err => {
-    throw new Error(err)
+    console.log(err)
   })
 
