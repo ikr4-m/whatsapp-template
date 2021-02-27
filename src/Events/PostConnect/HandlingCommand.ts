@@ -1,6 +1,7 @@
 import { WAConnection } from '@adiwajshing/baileys'
+import State from '../../State'
 
-export default function (client: WAConnection): void {
+export default function (client: WAConnection, _state: State): void {
   client.on('chat-update', chat => {
     if (!chat.messages && !chat.count) return
 

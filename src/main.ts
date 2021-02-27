@@ -1,7 +1,9 @@
 import { WAConnection } from '@adiwajshing/baileys'
+import State from './State'
 import * as FS from 'fs'
 
 const client = new WAConnection()
+const state = new State()
 
 async function connectToWhatsApp () {
   // Handling event pre-connect
@@ -12,7 +14,7 @@ async function connectToWhatsApp () {
 
     // Import function
     const evtFnc = await import(`./Events/PreConnect/${evt}`)
-    evtFnc.default(client)
+    evtFnc.default(client, state)
   })  
 
   // Awaiting connect flag
@@ -26,7 +28,7 @@ async function connectToWhatsApp () {
 
     // Import function
     const evtFnc = await import(`./Events/PostConnect/${evt}`)
-    evtFnc.default(client)
+    evtFnc.default(client, state)
   })
 }
 
