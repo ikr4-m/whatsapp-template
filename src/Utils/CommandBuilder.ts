@@ -1,4 +1,4 @@
-import { WAConnection, WAChatUpdate } from '@adiwajshing/baileys'
+import { WAConnection, proto } from '@adiwajshing/baileys'
 import { CommandOptions } from '../@Typings/CommandOptions'
 import State from '../State'
 
@@ -8,7 +8,7 @@ export abstract class CommandBuilder {
     this.options = options
   }
 
-  public async run(_client: WAConnection, _context: WAChatUpdate, _state: State): Promise<any> {
+  public async run(_client: WAConnection, _context: proto.WebMessageInfo, _state: State): Promise<any> {
     throw new Error("Not implemented")
   }
 }

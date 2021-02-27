@@ -1,6 +1,7 @@
-import { WAConnection, WAChatUpdate, MessageType } from '@adiwajshing/baileys'
+import { WAConnection, proto, MessageType } from '@adiwajshing/baileys'
 import { CommandBuilder } from '../../Utils/CommandBuilder'
 import State from '../../State'
+import { Send } from '../../Utils/Generator'
 
 export default class Ping extends CommandBuilder {
   constructor() {
@@ -10,8 +11,8 @@ export default class Ping extends CommandBuilder {
     })
   }
 
-  public async run(client: WAConnection, context: WAChatUpdate, _state: State): Promise<any> {
-    client.sendMessage(context.messages.first.key.id, "Pong", MessageType.text)
+  public async run(client: WAConnection, context: proto.WebMessageInfo, _state: State): Promise<any> {
+    Send.messageReply(client, context, "Pong!", true)
   }
 }
 

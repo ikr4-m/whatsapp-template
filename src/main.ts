@@ -22,6 +22,7 @@ async function connectToWhatsApp () {
 
   // Awaiting connect flag
   await client.connect()
+  console.log(`[BOT] Connected to ${client.user.jid}!`)
 
   // Handling event post-connect
   FS.readdirSync('./build/src/Events/PostConnect').forEach(async (evt) => {
