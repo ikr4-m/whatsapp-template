@@ -4,28 +4,29 @@ import * as FS from 'fs'
 const client = new WAConnection()
 
 async function connectToWhatsApp () {
-  // Load credentials if available
-  if (FS.existsSync('./authentication.json')) {
-    client.loadAuthInfo('./authentication.json')
-  }
+  // Handling event pre-connect
+  FS.readdirSync('./build/src/Events/PreConnect').forEach(async (evt) => {
+    // Skip if .map
+    if (evt.split('.').pop() === 'map')
+      return
 
-  // Save credentials if updated
-  client.on('credentials-updated', () => {
-    console.log("Credentials updated!")
-    const authinfo = client.base64EncodedAuthInfo()
-    FS.writeFileSync('./authentication.json', JSON.stringify(authinfo, null, '\t'))
-  })
+    // Import function
+    const evtFnc = await import(`./Events/PreConnect/${evt}`)
+    evtFnc.default(client)
+  })  
 
   // Awaiting connect flag
   await client.connect()
 
-  // Handling chat
-  client.on('chat-update', (chat) => {
-    if (!chat.messages && !chat.count) return
-    
-    console.log('events::chat_update')
-    const message = chat.messages.all()
-    console.log(message)
+  // Handling event post-connect
+  FS.readdirSync('./build/src/Events/PostConnect').forEach(async (evt) => {
+    // Skip if .map
+    if (evt.split('.').pop() === 'map')
+      return
+
+    // Import function
+    const evtFnc = await import(`./Events/PostConnect/${evt}`)
+    evtFnc.default(client)
   })
 }
 
