@@ -1,4 +1,4 @@
-import { WAConnection, proto, MessageType } from '@adiwajshing/baileys'
+import { WAConnection, proto } from '@adiwajshing/baileys'
 import { CommandBuilder } from '../../Utils/CommandBuilder'
 import State from '../../State'
 import { Send } from '../../Utils/Generator'

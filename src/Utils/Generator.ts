@@ -11,19 +11,35 @@ export function getGroupID(client: WAConnection, context: proto.WebMessageInfo):
 export const Send = {
   message: async (client: WAConnection, context: proto.WebMessageInfo, message: string, read?: boolean): Promise<void> => {
     read = read || false
-    await client.sendMessage(context.key.remoteJid, message, MessageType.text)
     if (read) {
       await client.chatRead(context.key.remoteJid, 'read')
     }
+    await client.sendMessage(context.key.remoteJid, message, MessageType.extendedText)
   },
   messageReply: async (client: WAConnection, context: proto.WebMessageInfo, message: string, read?: boolean): Promise<void> => {
     read = read || false
-    await client.sendMessage(context.key.remoteJid, message, MessageType.text, {
-      quoted: context
-    })
     if (read) {
       await client.chatRead(context.key.remoteJid, 'read')
     }
+    await client.sendMessage(context.key.remoteJid, message, MessageType.extendedText, {
+      quoted: context
+    })
+  },
+  sticker: async (client: WAConnection, context: proto.WebMessageInfo, image: Buffer, read?: boolean): Promise<void> => {
+    read = read || false
+    if (read) {
+      await client.chatRead(context.key.remoteJid, 'read')
+    }
+    await client.sendMessage(context.key.remoteJid, image, MessageType.sticker)
+  },
+  stickerReply: async (client: WAConnection, context: proto.WebMessageInfo, image: Buffer, read?: boolean): Promise<void> => {
+    read = read || false
+    if (read) {
+      await client.chatRead(context.key.remoteJid, 'read')
+    }
+    await client.sendMessage(context.key.remoteJid, image, MessageType.sticker, {
+      quoted: context
+    })
   }
 }
 
