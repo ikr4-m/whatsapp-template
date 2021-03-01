@@ -1,4 +1,5 @@
-import {MessageType, proto, WAConnection} from "@adiwajshing/baileys";
+import { MessageType, proto, WAConnection } from "@adiwajshing/baileys";
+import * as Moment from 'moment'
 
 export function getNumberID(phoneNumber: string): string {
   return `${phoneNumber}@s.whatsapp.net`
@@ -6,6 +7,14 @@ export function getNumberID(phoneNumber: string): string {
 
 export function getGroupID(client: WAConnection, context: proto.WebMessageInfo): string {
   return `${client.user.jid.split('@')[0]}-${context.key.remoteJid.split('@')[0].split('-')[1]}@g.us`
+}
+
+export function generateFilename(context: proto.WebMessageInfo, desc?: string): string {
+  return `${Moment().format('YYYYMMDDHHmmss')}-${context.key.remoteJid.split('@')[0]}${!desc ? '' : `-${desc}`}`
+}
+
+export function mimetypeToExtension(mimetype: string): string {
+  return mimetype.split('/')[1]
 }
 
 export const Send = {

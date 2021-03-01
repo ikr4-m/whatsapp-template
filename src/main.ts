@@ -2,6 +2,7 @@ import { WAConnection } from '@adiwajshing/baileys'
 import State from './State'
 import ResolvingCommand from './Utils/ResolvingCommand'
 import * as FS from 'fs'
+import 'dotenv/config'
 
 const client = new WAConnection()
 const state = new State()

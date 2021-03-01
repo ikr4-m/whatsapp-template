@@ -26,7 +26,13 @@ build/
 # Optional eslint cache
 .eslintcache
 
+# Temp folder
+Temp/**/*.*
+!Temp/**/.emptydir
+
+
 # Misc
 .DS_Store
 .vimsession
 authentication.json
+.env
