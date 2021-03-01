@@ -30,9 +30,10 @@ build/
 Temp/**/*.*
 !Temp/**/.emptydir
 
-
 # Misc
 .DS_Store
 .vimsession
 authentication.json
 .env
+.git_*
+
