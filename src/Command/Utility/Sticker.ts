@@ -21,32 +21,29 @@ export default class Sticker extends CommandBuilder {
       return
     }
 
-    if (ifSendPicture) {
-      const location = `./Temp/Stickers/${generateFilename(context, 'sticker')}`
-      await client.downloadAndSaveMediaMessage(context, location)
-      execFile(
-        process.env.CWEBP_LOCATION,
-        ['-q', '100', `${location}.${mimetypeToExtension(context.message.imageMessage.mimetype)}`, '-o', `${location}.webp`],
-        async err => {
-          if (err) {
-            console.log(err)
-            await Send.message(client, context, 'Error: ' + err.message)
-            return
-          }
-
-          await Send.stickerReply(client, context, readFileSync(`${location}.webp`))
-
-          // When the sticker is actually downloaded, delete it after 60 seconds
-          setTimeout(() => {
-            // Delete webp
-            rmSync(`${location}.webp`)
-            // Delete image
-            rmSync(`${location}.${mimetypeToExtension(context.message.imageMessage.mimetype)}`)
-          }, 60000);
+    const location = `./Temp/Stickers/${generateFilename(context, 'sticker')}`
+    await client.downloadAndSaveMediaMessage(context, location)
+    execFile(
+      process.env.CWEBP_LOCATION,
+      ['-q', '100', `${location}.${mimetypeToExtension(context.message.imageMessage.mimetype)}`, '-o', `${location}.webp`],
+      async err => {
+        if (err) {
+          console.log(err)
+          await Send.message(client, context, 'Error: ' + err.message)
+          return
         }
-      )
-      return
-    }
+
+        await Send.stickerReply(client, context, readFileSync(`${location}.webp`))
+
+        // When the sticker is actually downloaded, delete it after 60 seconds
+        setTimeout(() => {
+          // Delete webp
+          rmSync(`${location}.webp`)
+          // Delete image
+          rmSync(`${location}.${mimetypeToExtension(context.message.imageMessage.mimetype)}`)
+        }, 60000);
+      }
+    )
   }
 }
 
