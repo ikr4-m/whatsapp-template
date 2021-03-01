@@ -21,7 +21,7 @@ export default class Help extends CommandBuilder {
     if (cmdName.length < 1) {
       state.help.forEach((val, key) => {
         key = key.split('_').map(v => `${v[0]}${v.slice(1).toLowerCase()}`).join(' ')
-        generatedText += `${key}\n${val.join(', ')}\n`
+        generatedText += `[${key}]\n${val.join(', ')}\n\n`
       })
 
       Send.messageReply(

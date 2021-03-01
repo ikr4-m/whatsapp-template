@@ -7,5 +7,6 @@ export default class State {
   public cooldown = new Map<string, any>()
 
   public prefix = "."
+  public uptime = new Date()
 }
 
